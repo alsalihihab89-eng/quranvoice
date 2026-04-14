@@ -18,15 +18,20 @@
     }
 
     header {
-      padding: 24px 20px;
-      font-size: 30px;
-      font-weight: bold;
-      color: #f2d17b;
+      padding: 18px 20px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       background: rgba(0,0,0,0.2);
       position: sticky;
       top: 0;
       backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      width: 180px;
+      max-width: 80%;
+      margin: 0 auto;
+      display: block;
+      filter: drop-shadow(0 0 18px rgba(242, 209, 123, 0.45));
     }
 
     section {
@@ -122,6 +127,28 @@
       border-top: 1px solid rgba(255,255,255,0.08);
       color: #cfc8a7;
       font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .logo {
+        width: 140px;
+      }
+
+      section {
+        padding: 60px 18px;
+      }
     }
   </style>
 </head>
