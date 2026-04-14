@@ -24,6 +24,60 @@
       position: sticky;
       top: 0;
       backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-container {
+      position: relative;
+      text-align: left;
+    }
+
+    .menu-button {
+      background: #c79a2b;
+      color: #111;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .menu-button:hover {
+      background: #e7bc54;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: #102427;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      min-width: 180px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 14px 16px;
+      color: #f4f1df;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255,255,255,0.06);
     }
 
     .logo {
@@ -32,6 +86,10 @@
       margin: 0 auto;
       display: block;
       filter: drop-shadow(0 0 18px rgba(242, 209, 123, 0.45));
+    }
+
+    .header-spacer {
+      width: 120px;
     }
 
     section {
@@ -130,6 +188,10 @@
     }
 
     @media (max-width: 700px) {
+      header {
+        gap: 10px;
+      }
+
       h1 {
         font-size: 36px;
       }
@@ -146,8 +208,16 @@
         width: 140px;
       }
 
+      .header-spacer {
+        width: 80px;
+      }
+
       section {
         padding: 60px 18px;
+      }
+
+      .dropdown {
+        min-width: 150px;
       }
     }
   </style>
@@ -155,7 +225,19 @@
 <body>
 
 <header>
+  <div class="menu-container">
+    <button class="menu-button" onclick="toggleMenu()">Menü</button>
+    <div class="dropdown" id="dropdownMenu">
+      <a href="#quran">Quran</a>
+      <a href="#hadeeth">Hadeeth</a>
+      <a href="#audio">Audio</a>
+      <a href="#articles">Articles</a>
+    </div>
+  </div>
+
   <img src="logo.png" alt="quranvoice logo" class="logo">
+
+  <div class="header-spacer"></div>
 </header>
 
 <section class="hero">
@@ -165,23 +247,31 @@
       Höre Quran in einer ruhigen, schönen und modernen Umgebung.
       Klar gestaltet, einfach zu nutzen und angenehm auf Handy und Desktop.
     </p>
-    <a href="#rezitation" class="btn">Jetzt hören</a>
+    <a href="#audio" class="btn">Jetzt hören</a>
   </div>
 </section>
 
-<section>
+<section id="quran">
   <div class="box">
-    <h2>Über quranvoice</h2>
+    <h2>Quran</h2>
     <p>
-      quranvoice ist eine einfache und stilvolle Webseite für Quran-Inhalte.
-      Der Fokus liegt auf Ruhe, Schönheit und einer klaren Darstellung.
+      Hier kannst du später Quran-Inhalte, Suren oder Verse hinzufügen.
     </p>
   </div>
 </section>
 
-<section>
+<section id="hadeeth">
   <div class="box">
-    <h2>Inhalte</h2>
+    <h2>Hadeeth</h2>
+    <p>
+      Hier kannst du später Hadeeth-Inhalte und Sammlungen einfügen.
+    </p>
+  </div>
+</section>
+
+<section id="articles">
+  <div class="box">
+    <h2>Articles</h2>
     <div class="cards">
       <div class="card">
         <h3>Quran Rezitation</h3>
@@ -199,9 +289,9 @@
   </div>
 </section>
 
-<section id="rezitation">
+<section id="audio">
   <div class="box">
-    <h2>Al-Fatiha</h2>
+    <h2>Audio</h2>
     <p>Beispiel einer Quran-Rezitation:</p>
     <div class="audio-box">
       <audio controls>
@@ -222,6 +312,26 @@
 <footer>
   © 2026 quranvoice. Alle Rechte vorbehalten.
 </footer>
+
+<script>
+  function toggleMenu() {
+    var menu = document.getElementById("dropdownMenu");
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "block";
+    }
+  }
+
+  window.onclick = function(event) {
+    if (!event.target.matches('.menu-button')) {
+      var menu = document.getElementById("dropdownMenu");
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+      }
+    }
+  }
+</script>
 
 </body>
 </html>
