@@ -168,7 +168,8 @@
     }
 
     .audio-box,
-    .mushaf-box {
+    .mushaf-box,
+    .video-box {
       margin-top: 30px;
       background: rgba(255,255,255,0.06);
       padding: 25px;
@@ -185,9 +186,11 @@
       background: white;
     }
 
-    audio {
+    audio,
+    video {
       width: 100%;
       margin-top: 15px;
+      border-radius: 14px;
     }
 
     footer {
@@ -242,6 +245,7 @@
       <a href="#hadeeth">Hadeeth</a>
       <a href="#audio">Audio</a>
       <a href="#articles">Articles</a>
+      <a href="#video">Video</a>
     </div>
   </div>
 
@@ -316,6 +320,19 @@
         <source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3" type="audio/mpeg">
         Dein Browser unterstützt kein Audio.
       </audio>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="box">
+    <h2>Video</h2>
+    <p>Ein kurzes Video:</p>
+    <div class="video-box">
+      <video controls>
+        <source src="video.mp4" type="video/mp4">
+        Dein Browser unterstützt kein Video.
+      </video>
     </div>
   </div>
 </section>
