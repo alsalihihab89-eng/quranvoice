@@ -76,6 +76,11 @@
     video, audio { width: 100%; }
 
     footer { padding: 30px; }
+
+    .arabic {
+      direction: rtl;
+      font-family: "Amiri", serif;
+    }
   </style>
 </head>
 
@@ -153,6 +158,8 @@ function toggleMenu() {
 function switchLang() {
   if (lang === "de") {
     lang = "en";
+    document.documentElement.lang = "en";
+    document.body.classList.remove("arabic");
 
     document.getElementById("title").innerText = "Welcome to quranvoice";
     document.getElementById("desc").innerText = "Listen to Quran in a peaceful environment.";
@@ -162,8 +169,23 @@ function switchLang() {
     document.getElementById("articleTitle").innerText = "Articles";
     document.getElementById("articleText").innerText = "Articles coming soon.";
 
+  } else if (lang === "en") {
+    lang = "ar";
+    document.documentElement.lang = "ar";
+    document.body.classList.add("arabic");
+
+    document.getElementById("title").innerText = "مرحبًا بكم في QuranVoice";
+    document.getElementById("desc").innerText = "استمع إلى القرآن في بيئة هادئة.";
+    document.getElementById("quranTitle").innerText = "القرآن";
+    document.getElementById("hadithTitle").innerText = "الحديث";
+    document.getElementById("hadithText").innerText = "يمكنك إضافة المحتوى هنا.";
+    document.getElementById("articleTitle").innerText = "مقالات";
+    document.getElementById("articleText").innerText = "ستتوفر المقالات قريبًا.";
+
   } else {
     lang = "de";
+    document.documentElement.lang = "de";
+    document.body.classList.remove("arabic");
 
     document.getElementById("title").innerText = "Willkommen bei quranvoice";
     document.getElementById("desc").innerText = "Höre Quran in einer ruhigen Umgebung.";
