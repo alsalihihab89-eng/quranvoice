@@ -29,11 +29,14 @@
       z-index: 100;
     }
 
-    .menu-container { position: relative; }
+    .menu-container {
+      position: relative;
+    }
 
     .menu-button,
     .lang-btn,
-    .close-btn {
+    .close-btn,
+    .audio-open-btn {
       background: #c79a2b;
       color: #111;
       border: none;
@@ -41,6 +44,13 @@
       padding: 10px 14px;
       font-weight: bold;
       cursor: pointer;
+    }
+
+    .menu-button:hover,
+    .lang-btn:hover,
+    .close-btn:hover,
+    .audio-open-btn:hover {
+      background: #e7bc54;
     }
 
     .dropdown {
@@ -125,7 +135,9 @@
       margin: 28px auto 0;
     }
 
-    .hadith-card {
+    .hadith-card,
+    .reciter-card,
+    .sura-item {
       padding: 20px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.08);
@@ -135,7 +147,9 @@
       font-weight: bold;
     }
 
-    .hadith-card:hover {
+    .hadith-card:hover,
+    .reciter-card:hover,
+    .sura-item:hover {
       background: rgba(255,255,255,0.14);
       transform: translateY(-3px);
     }
@@ -162,7 +176,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.82);
       z-index: 9999;
       padding: 30px 15px;
       overflow-y: auto;
@@ -226,6 +240,32 @@
       line-height: 1.8;
       color: #e4dcc0;
       margin: 0;
+    }
+
+    .reciter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .sura-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .player-box {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+
+    .now-playing {
+      color: #f2d17b;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     @media (max-width: 700px) {
@@ -305,9 +345,7 @@
 <section id="audio">
   <h2 id="audioTitle">Audio</h2>
   <div class="audio-box">
-    <audio controls>
-      <source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3">
-    </audio>
+    <button class="audio-open-btn" onclick="openAudioLibrary()">🎧 Öffne Audio Bibliothek</button>
   </div>
 </section>
 
@@ -316,6 +354,7 @@
   <div class="video-box">
     <video controls>
       <source src="video.mp4" type="video/mp4">
+      Dein Browser unterstützt kein Video.
     </video>
   </div>
 </section>
@@ -347,6 +386,28 @@
   </div>
 </div>
 
+<div id="audioPopupOverlay" class="popup-overlay">
+  <div class="popup">
+    <div class="popup-header">
+      <h2 id="audioLibraryTitle">Audio Bibliothek</h2>
+      <button class="close-btn" onclick="closeAudioLibrary()">X</button>
+    </div>
+
+    <div class="reciter-grid" id="reciterGrid">
+      <div class="reciter-card" onclick="openReciter('alafasi')">🎧 Mishary Alafasi – Khatmah</div>
+    </div>
+
+    <div id="suraList" class="sura-list"></div>
+
+    <div class="player-box">
+      <div class="now-playing" id="nowPlaying">Noch nichts ausgewählt.</div>
+      <audio id="audioPlayer" controls>
+        Dein Browser unterstützt kein Audio.
+      </audio>
+    </div>
+  </div>
+</div>
+
 <script>
   let lang = "de";
 
@@ -359,13 +420,17 @@
       hadithText: "Wähle ein Buch zum Lesen.",
       hadithNote: "Beim Klick werden echte Hadithe live geladen. Aktuell lade ich zur Übersicht die ersten 10 Einträge des gewählten Buches.",
       audio: "Audio",
+      audioLibrary: "Audio Bibliothek",
+      openAudio: "🎧 Öffne Audio Bibliothek",
+      nowPlaying: "Noch nichts ausgewählt.",
       video: "Video",
       articles: "Articles",
       articleText: "Artikel folgen später.",
       menu: "Menü",
       loading: "Lade Inhalte...",
       error: "Die Hadithe konnten gerade nicht geladen werden.",
-      noContent: "Keine Inhalte gefunden."
+      noContent: "Keine Inhalte gefunden.",
+      reciterAlafasi: "🎧 Mishary Alafasi – Khatmah"
     },
     en: {
       title: "Welcome to quranvoice",
@@ -375,13 +440,17 @@
       hadithText: "Choose a book to read.",
       hadithNote: "When you click, real hadith are loaded live. For now, the first 10 entries of the selected book are shown.",
       audio: "Audio",
+      audioLibrary: "Audio Library",
+      openAudio: "🎧 Open Audio Library",
+      nowPlaying: "Nothing selected yet.",
       video: "Video",
       articles: "Articles",
       articleText: "Articles coming soon.",
       menu: "Menu",
       loading: "Loading content...",
       error: "The hadith could not be loaded right now.",
-      noContent: "No content found."
+      noContent: "No content found.",
+      reciterAlafasi: "🎧 Mishary Alafasi – Khatmah"
     },
     ar: {
       title: "مرحبًا بكم في QuranVoice",
@@ -391,13 +460,17 @@
       hadithText: "اختر كتابًا للقراءة.",
       hadithNote: "عند الضغط يتم تحميل أحاديث حقيقية مباشرة. حاليًا يتم عرض أول 10 أحاديث من الكتاب المختار.",
       audio: "الصوت",
+      audioLibrary: "مكتبة الصوت",
+      openAudio: "🎧 افتح مكتبة الصوت",
+      nowPlaying: "لم يتم اختيار شيء بعد.",
       video: "الفيديو",
       articles: "المقالات",
       articleText: "ستتوفر المقالات قريبًا.",
       menu: "القائمة",
       loading: "جاري تحميل المحتوى...",
       error: "تعذر تحميل الأحاديث الآن.",
-      noContent: "لم يتم العثور على محتوى."
+      noContent: "لم يتم العثور على محتوى.",
+      reciterAlafasi: "🎧 مشاري العفاسي – ختمة"
     }
   };
 
@@ -412,6 +485,29 @@
     darimi: "Sunan ad-Darimi",
     malik: "Muwatta Malik"
   };
+
+  const suras = [
+    { num: 1, name: "Al-Fatiha" },
+    { num: 2, name: "Al-Baqara" },
+    { num: 3, name: "Aal-Imran" },
+    { num: 4, name: "An-Nisa" },
+    { num: 5, name: "Al-Ma'idah" },
+    { num: 6, name: "Al-An'am" },
+    { num: 7, name: "Al-A'raf" },
+    { num: 8, name: "Al-Anfal" },
+    { num: 9, name: "At-Tawbah" },
+    { num: 10, name: "Yunus" },
+    { num: 11, name: "Hud" },
+    { num: 12, name: "Yusuf" },
+    { num: 13, name: "Ar-Ra'd" },
+    { num: 14, name: "Ibrahim" },
+    { num: 15, name: "Al-Hijr" },
+    { num: 16, name: "An-Nahl" },
+    { num: 17, name: "Al-Isra" },
+    { num: 18, name: "Al-Kahf" },
+    { num: 19, name: "Maryam" },
+    { num: 20, name: "Ta-Ha" }
+  ];
 
   function toggleMenu() {
     const m = document.getElementById("menu");
@@ -438,6 +534,9 @@
     document.getElementById("hadithText").innerText = t.hadithText;
     document.getElementById("hadithNote").innerText = t.hadithNote;
     document.getElementById("audioTitle").innerText = t.audio;
+    document.getElementById("audioLibraryTitle").innerText = t.audioLibrary;
+    document.querySelector(".audio-open-btn").innerText = t.openAudio;
+    document.getElementById("nowPlaying").innerText = t.nowPlaying;
     document.getElementById("videoTitle").innerText = t.video;
     document.getElementById("articlesTitle").innerText = t.articles;
     document.getElementById("articleText").innerText = t.articleText;
@@ -450,6 +549,7 @@
 
     document.querySelector(".menu-button").innerText = t.menu;
     document.getElementById("langBtn").innerText = lang === "de" ? "EN" : lang === "en" ? "AR" : "DE";
+    document.querySelector("#reciterGrid .reciter-card").innerText = t.reciterAlafasi;
   }
 
   function switchLang() {
@@ -487,7 +587,7 @@
       content.innerHTML = hadiths.map(item => {
         const number = item.number || "";
         const arab = item.arab || "";
-        const translation = item.id || item.translation || "";
+        const translation = item.id || "";
 
         return `
           <div class="hadith-item">
@@ -505,6 +605,34 @@
 
   function closeBook() {
     document.getElementById("popupOverlay").style.display = "none";
+  }
+
+  function openAudioLibrary() {
+    document.getElementById("audioPopupOverlay").style.display = "block";
+  }
+
+  function closeAudioLibrary() {
+    document.getElementById("audioPopupOverlay").style.display = "none";
+  }
+
+  function openReciter(reciter) {
+    const suraList = document.getElementById("suraList");
+    if (reciter === "alafasi") {
+      suraList.innerHTML = suras.map(sura => `
+        <div class="sura-item" onclick="playSura(${sura.num}, '${sura.name.replace(/'/g, "\\'")}')">
+          ${sura.num}. ${sura.name}
+        </div>
+      `).join("");
+    }
+  }
+
+  function playSura(num, name) {
+    const padded = String(num).padStart(3, "0");
+    const url = `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${padded}.mp3`;
+    const player = document.getElementById("audioPlayer");
+    player.src = url;
+    player.play();
+    document.getElementById("nowPlaying").innerText = `Now Playing: ${num}. ${name}`;
   }
 
   applyTranslations();
