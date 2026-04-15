@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <title>quranvoice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -29,90 +28,62 @@
       justify-content: space-between;
     }
 
-    .menu-container {
-      position: relative;
-      text-align: left;
-    }
+    .menu-container { position: relative; }
 
     .menu-button {
       background: #c79a2b;
-      color: #111;
       border: none;
       border-radius: 10px;
-      padding: 10px 16px;
-      font-weight: bold;
+      padding: 10px;
       cursor: pointer;
-      font-size: 16px;
     }
 
     .dropdown {
       display: none;
       position: absolute;
       top: 48px;
-      left: 0;
       background: #102427;
-      border-radius: 14px;
-      min-width: 180px;
-      overflow: hidden;
+      border-radius: 10px;
     }
 
     .dropdown a {
       display: block;
-      padding: 14px;
+      padding: 10px;
       color: white;
       text-decoration: none;
     }
 
-    .dropdown a:hover {
-      background: rgba(255,255,255,0.1);
+    .logo { width: 150px; }
+
+    .lang-btn {
+      background: #c79a2b;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .logo {
-      width: 160px;
-    }
-
-    section {
-      padding: 80px 20px;
-    }
-
-    h1, h2 {
-      color: #f2d17b;
-    }
+    section { padding: 60px 20px; }
 
     .audio-box, .video-box, .mushaf-box {
-      margin-top: 30px;
-      padding: 20px;
-      border-radius: 12px;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
       background: rgba(255,255,255,0.05);
     }
 
-    video, audio {
-      width: 100%;
-      border-radius: 12px;
-    }
+    video, audio { width: 100%; }
 
-    .socials a {
-      font-size: 26px;
-      margin: 10px;
-      color: #f2d17b;
-      text-decoration: none;
-    }
-
-    .socials a:hover {
-      color: white;
-    }
-
-    footer {
-      padding: 30px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
+    footer { padding: 30px; }
   </style>
 </head>
+
 <body>
 
 <header>
   <div class="menu-container">
-    <button class="menu-button" onclick="toggleMenu()">Menü</button>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
     <div class="dropdown" id="menu">
       <a href="#quran">Quran</a>
       <a href="#hadeeth">Hadeeth</a>
@@ -124,23 +95,24 @@
 
   <img src="logo.png" class="logo">
 
+  <button class="lang-btn" onclick="switchLang()">EN</button>
 </header>
 
 <section>
-  <h1>Willkommen bei quranvoice</h1>
-  <p>Höre Quran in einer ruhigen und schönen Umgebung.</p>
+  <h1 id="title">Willkommen bei quranvoice</h1>
+  <p id="desc">Höre Quran in einer ruhigen Umgebung.</p>
 </section>
 
 <section id="quran">
-  <h2>Quran</h2>
+  <h2 id="quranTitle">Quran</h2>
   <div class="mushaf-box">
     <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Quran_Surah_1_Al-Fatiha.png" style="width:100%;">
   </div>
 </section>
 
 <section id="hadeeth">
-  <h2>Hadeeth</h2>
-  <p>Hier kannst du Inhalte hinzufügen.</p>
+  <h2 id="hadithTitle">Hadeeth</h2>
+  <p id="hadithText">Hier kannst du Inhalte hinzufügen.</p>
 </section>
 
 <section id="audio">
@@ -156,33 +128,51 @@
   <h2>Video</h2>
   <div class="video-box">
     <video controls>
-      <source src="video.mp4" type="video/mp4">
+      <source src="video.mp4">
     </video>
   </div>
 </section>
 
 <section id="articles">
-  <h2>Articles</h2>
-  <p>Artikel folgen später.</p>
+  <h2 id="articleTitle">Articles</h2>
+  <p id="articleText">Artikel folgen später.</p>
 </section>
 
 <footer>
-
-  <div class="socials">
-    <a href="https://www.facebook.com/share/1FkYHa5KYs/" target="_blank">📘</a>
-    <a href="https://youtube.com/@quranvoice-i7d?si=1ONBC52pN-yGPPs6" target="_blank">▶️</a>
-    <a href="https://www.instagram.com/quranvoice63?igsh=YW9lZmlqOTAxYXZk&utm_source=ig_contact_invite" target="_blank">📸</a>
-    <a href="https://www.tiktok.com/@quranvoice296?_r=1&_t=ZG-95XKJuhrETR" target="_blank">🎵</a>
-  </div>
-
   <p>© 2026 quranvoice</p>
-
 </footer>
 
 <script>
+let lang = "de";
+
 function toggleMenu() {
-  var m = document.getElementById("menu");
+  let m = document.getElementById("menu");
   m.style.display = m.style.display === "block" ? "none" : "block";
+}
+
+function switchLang() {
+  if (lang === "de") {
+    lang = "en";
+
+    document.getElementById("title").innerText = "Welcome to quranvoice";
+    document.getElementById("desc").innerText = "Listen to Quran in a peaceful environment.";
+    document.getElementById("quranTitle").innerText = "Quran";
+    document.getElementById("hadithTitle").innerText = "Hadith";
+    document.getElementById("hadithText").innerText = "You can add content here.";
+    document.getElementById("articleTitle").innerText = "Articles";
+    document.getElementById("articleText").innerText = "Articles coming soon.";
+
+  } else {
+    lang = "de";
+
+    document.getElementById("title").innerText = "Willkommen bei quranvoice";
+    document.getElementById("desc").innerText = "Höre Quran in einer ruhigen Umgebung.";
+    document.getElementById("quranTitle").innerText = "Quran";
+    document.getElementById("hadithTitle").innerText = "Hadeeth";
+    document.getElementById("hadithText").innerText = "Hier kannst du Inhalte hinzufügen.";
+    document.getElementById("articleTitle").innerText = "Articles";
+    document.getElementById("articleText").innerText = "Artikel folgen später.";
+  }
 }
 </script>
 
