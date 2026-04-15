@@ -1,201 +1,214 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>quranvoice</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>quranvoice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #081315, #102427, #0b1719);
-      color: #f4f1df;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #081315, #102427, #0b1719);
+  color: #f4f1df;
+  text-align: center;
+}
 
-    header {
-      padding: 18px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.2);
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+header {
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+}
 
-    .menu-container { position: relative; }
+.logo { width: 140px; }
 
-    .menu-button {
-      background: #c79a2b;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-    }
+.menu-button, .lang-btn {
+  background: #c79a2b;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    .dropdown {
-      display: none;
-      position: absolute;
-      top: 48px;
-      background: #102427;
-      border-radius: 10px;
-    }
+.dropdown {
+  display: none;
+  position: absolute;
+  background: #102427;
+}
 
-    .dropdown a {
-      display: block;
-      padding: 10px;
-      color: white;
-      text-decoration: none;
-    }
+.dropdown a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
 
-    .logo { width: 150px; }
+section { padding: 50px 20px; }
 
-    .lang-btn {
-      background: #c79a2b;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.hadith-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
 
-    section { padding: 60px 20px; }
+.hadith-card {
+  padding: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  cursor: pointer;
+}
 
-    .audio-box, .video-box, .mushaf-box {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.05);
-    }
+.hadith-card:hover {
+  background: rgba(255,255,255,0.15);
+}
 
-    video, audio { width: 100%; }
+.audio-box, .video-box, .mushaf-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
 
-    footer { padding: 30px; }
+video, audio { width: 100%; }
 
-    .arabic {
-      direction: rtl;
-      font-family: "Amiri", serif;
-    }
-  </style>
+.arabic { direction: rtl; }
+
+footer { padding: 20px; }
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="menu-container">
-    <button class="menu-button" onclick="toggleMenu()">☰</button>
-    <div class="dropdown" id="menu">
-      <a href="#quran">Quran</a>
-      <a href="#hadeeth">Hadeeth</a>
-      <a href="#audio">Audio</a>
-      <a href="#articles">Articles</a>
-      <a href="#video">Video</a>
-    </div>
-  </div>
+<button onclick="toggleMenu()" class="menu-button">☰</button>
 
-  <img src="logo.png" class="logo">
+<img src="logo.png" class="logo">
 
-  <button class="lang-btn" onclick="switchLang()">EN</button>
+<button onclick="switchLang()" class="lang-btn">🌐</button>
+
+<div class="dropdown" id="menu">
+<a href="#quran">Quran</a>
+<a href="#hadeeth">Hadeeth</a>
+<a href="#audio">Audio</a>
+<a href="#video">Video</a>
+</div>
 </header>
 
 <section>
-  <h1 id="title">Willkommen bei quranvoice</h1>
-  <p id="desc">Höre Quran in einer ruhigen Umgebung.</p>
+<h1 id="title">Willkommen bei quranvoice</h1>
+<p id="desc">Höre Quran in einer ruhigen Umgebung.</p>
 </section>
 
 <section id="quran">
-  <h2 id="quranTitle">Quran</h2>
-  <div class="mushaf-box">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Quran_Surah_1_Al-Fatiha.png" style="width:100%;">
-  </div>
+<h2 id="quranTitle">Quran</h2>
+<div class="mushaf-box">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Quran_Surah_1_Al-Fatiha.png" style="width:100%;">
+</div>
 </section>
 
 <section id="hadeeth">
-  <h2 id="hadithTitle">Hadeeth</h2>
-  <p id="hadithText">Hier kannst du Inhalte hinzufügen.</p>
+<h2 id="hadithTitle">Hadeeth</h2>
+
+<div class="hadith-grid">
+<div class="hadith-card" onclick="openBook('bukhari')">Sahih Bukhari</div>
+<div class="hadith-card" onclick="openBook('muslim')">Sahih Muslim</div>
+<div class="hadith-card" onclick="openBook('tirmidhi')">Tirmidhi</div>
+<div class="hadith-card" onclick="openBook('nasai')">An-Nasa’i</div>
+<div class="hadith-card" onclick="openBook('abudawud')">Abu Dawud</div>
+<div class="hadith-card" onclick="openBook('ibnmajah')">Ibn Majah</div>
+</div>
+
 </section>
 
 <section id="audio">
-  <h2>Audio</h2>
-  <div class="audio-box">
-    <audio controls>
-      <source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3">
-    </audio>
-  </div>
+<h2>Audio</h2>
+<div class="audio-box">
+<audio controls>
+<source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3">
+</audio>
+</div>
 </section>
 
 <section id="video">
-  <h2>Video</h2>
-  <div class="video-box">
-    <video controls>
-      <source src="video.mp4">
-    </video>
-  </div>
-</section>
-
-<section id="articles">
-  <h2 id="articleTitle">Articles</h2>
-  <p id="articleText">Artikel folgen später.</p>
+<h2>Video</h2>
+<div class="video-box">
+<video controls>
+<source src="video.mp4">
+</video>
+</div>
 </section>
 
 <footer>
-  <p>© 2026 quranvoice</p>
+<p>© 2026 quranvoice</p>
 </footer>
 
+<!-- Popup -->
+<div id="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
+<div style="background:#102427; margin:50px auto; padding:20px; width:90%; max-width:700px;">
+<button onclick="closeBook()">X</button>
+<h2 id="bookTitle"></h2>
+<p id="bookText"></p>
+</div>
+</div>
+
 <script>
-let lang = "de";
 
-function toggleMenu() {
-  let m = document.getElementById("menu");
-  m.style.display = m.style.display === "block" ? "none" : "block";
+let lang="de";
+
+function toggleMenu(){
+let m=document.getElementById("menu");
+m.style.display=m.style.display==="block"?"none":"block";
 }
 
-function switchLang() {
-  if (lang === "de") {
-    lang = "en";
-    document.documentElement.lang = "en";
-    document.body.classList.remove("arabic");
+function switchLang(){
 
-    document.getElementById("title").innerText = "Welcome to quranvoice";
-    document.getElementById("desc").innerText = "Listen to Quran in a peaceful environment.";
-    document.getElementById("quranTitle").innerText = "Quran";
-    document.getElementById("hadithTitle").innerText = "Hadith";
-    document.getElementById("hadithText").innerText = "You can add content here.";
-    document.getElementById("articleTitle").innerText = "Articles";
-    document.getElementById("articleText").innerText = "Articles coming soon.";
+if(lang==="de"){
+lang="en";
+document.getElementById("title").innerText="Welcome to quranvoice";
+document.getElementById("desc").innerText="Listen to Quran peacefully";
+document.getElementById("hadithTitle").innerText="Hadith";
 
-  } else if (lang === "en") {
-    lang = "ar";
-    document.documentElement.lang = "ar";
-    document.body.classList.add("arabic");
+}else if(lang==="en"){
+lang="ar";
+document.body.classList.add("arabic");
+document.getElementById("title").innerText="مرحبا بكم";
+document.getElementById("desc").innerText="استمع للقرآن";
+document.getElementById("hadithTitle").innerText="الحديث";
 
-    document.getElementById("title").innerText = "مرحبًا بكم في QuranVoice";
-    document.getElementById("desc").innerText = "استمع إلى القرآن في بيئة هادئة.";
-    document.getElementById("quranTitle").innerText = "القرآن";
-    document.getElementById("hadithTitle").innerText = "الحديث";
-    document.getElementById("hadithText").innerText = "يمكنك إضافة المحتوى هنا.";
-    document.getElementById("articleTitle").innerText = "مقالات";
-    document.getElementById("articleText").innerText = "ستتوفر المقالات قريبًا.";
-
-  } else {
-    lang = "de";
-    document.documentElement.lang = "de";
-    document.body.classList.remove("arabic");
-
-    document.getElementById("title").innerText = "Willkommen bei quranvoice";
-    document.getElementById("desc").innerText = "Höre Quran in einer ruhigen Umgebung.";
-    document.getElementById("quranTitle").innerText = "Quran";
-    document.getElementById("hadithTitle").innerText = "Hadeeth";
-    document.getElementById("hadithText").innerText = "Hier kannst du Inhalte hinzufügen.";
-    document.getElementById("articleTitle").innerText = "Articles";
-    document.getElementById("articleText").innerText = "Artikel folgen später.";
-  }
+}else{
+lang="de";
+document.body.classList.remove("arabic");
+document.getElementById("title").innerText="Willkommen bei quranvoice";
+document.getElementById("desc").innerText="Höre Quran in einer ruhigen Umgebung.";
+document.getElementById("hadithTitle").innerText="Hadeeth";
 }
+}
+
+function openBook(book){
+
+let text="";
+
+if(book==="bukhari") text="Sahih Bukhari Inhalte...";
+if(book==="muslim") text="Sahih Muslim Inhalte...";
+if(book==="tirmidhi") text="Tirmidhi Inhalte...";
+if(book==="nasai") text="Nasa’i Inhalte...";
+if(book==="abudawud") text="Abu Dawud Inhalte...";
+if(book==="ibnmajah") text="Ibn Majah Inhalte...";
+
+document.getElementById("bookTitle").innerText=book;
+document.getElementById("bookText").innerText=text;
+document.getElementById("popup").style.display="block";
+}
+
+function closeBook(){
+document.getElementById("popup").style.display="none";
+}
+
 </script>
 
 </body>
